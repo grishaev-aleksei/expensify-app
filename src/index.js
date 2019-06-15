@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Switch, BrowserRouter, Route} from 'react-router-dom';
 import './styles/styles.css';
 import * as serviceWorker from './serviceWorker';
 
@@ -19,14 +19,19 @@ const HelpPage = () => (
     <p>This is Help Page</p>
 );
 
+const NotFoundPage = () => (
+    <div>404!</div>
+);
+
 const routes = (
     <BrowserRouter>
-        <div>
+        <Switch>
             <Route path={'/'} component={Index} exact={true}/>
             <Route path={'/create'} component={AddExpensePage}/>
             <Route path={'/edit'} component={EditExpensePage}/>
             <Route path={'/help'} component={HelpPage}/>
-        </div>
+            <Route component={NotFoundPage}/>
+        </Switch>
     </BrowserRouter>
 );
 
