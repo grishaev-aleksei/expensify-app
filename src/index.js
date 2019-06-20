@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import {AppRouter} from "./routers/AppRouter";
 import './styles/styles.css';
 import * as serviceWorker from './serviceWorker';
+import {Redux} from "./playground/redux";
 
-ReactDOM.render(AppRouter, document.getElementById('root'));
+ReactDOM.render(<Redux name={'ara'}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
