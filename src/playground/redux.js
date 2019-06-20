@@ -23,7 +23,10 @@ export const Redux = (props) => {
         type: 'RESET'
     });
 
-    const store = createStore((state = {count: 0}, action) => {
+
+    //Reducers
+
+    const countReducer = (state = {count: 0}, action) => {
         switch (action.type) {
             case 'INCREMENT':
                 // const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
@@ -45,7 +48,9 @@ export const Redux = (props) => {
             default:
                 return state
         }
-    });
+    };
+
+    const store = createStore(countReducer);
 
     const unsubscribe = store.subscribe(() => {
         console.log(store.getState())
