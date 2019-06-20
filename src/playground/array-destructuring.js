@@ -21,3 +21,11 @@ const [itemName, smallPrice, mediumPrice, largePrice] = item;
 
 
 console.log(`A medium ${itemName} costs ${mediumPrice}`);
+
+
+const names = ['Andrew','Steve'];
+names.concat('July');
+console.log('names', names);
+
+const newAray = ['Adam',...names,'Sarah'];
+console.log(newAray);

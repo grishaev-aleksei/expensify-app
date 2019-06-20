@@ -1,5 +1,6 @@
 import {createStore, combineReducers} from "redux";
 import React from "react";
+import uuid from 'uuid';
 
 
 export const ReduxExpensify = () => {
@@ -20,11 +21,37 @@ export const ReduxExpensify = () => {
         }
     };
 
+    const addExpense = (
+        {
+            description = '',
+            note = '',
+            amount = 0,
+            createdAt = 0
+        } = {}
+    ) => ({
+        type: 'ADD_EXPENSE',
+        expense: {
+            id: uuid(),
+            description,
+            note,
+            amount,
+            createdAt
+        }
+    });
+
+    const removeExpense = ({id} = {}) => ({
+        type: 'REMOVE_EXPENSE',
+        id
+    });
+
 
     const expensesReducerDefaultState = [];
     const expensesReducer = (state = expensesReducerDefaultState, action) => {
         switch (action.type) {
-
+            case 'ADD_EXPENSE':
+                return [...state, action.expense];
+            case 'REMOVE_EXPENSE':
+                return state.filter(({id}) => id !== action.id;
             default:
                 return state
         }
@@ -41,7 +68,7 @@ export const ReduxExpensify = () => {
             default:
                 return state
         }
-    }
+    };
 
 
     const store = createStore(combineReducers({
@@ -49,7 +76,16 @@ export const ReduxExpensify = () => {
         filters: filtersReducer
     }));
 
-    console.log(store.getState());
+    store.subscribe(() => {
+        console.log(store.getState());
+    });
+
+    const expense1 = store.dispatch(addExpense({description: 'rent', amount: 1}));
+    const expense2 = store.dispatch(addExpense({description: 'coffee', amount: 3}));
+    const expense3 = store.dispatch(addExpense({description: 'tea', amount: 2}));
+
+    store.dispatch(removeExpense({id: expense1.expense.id}));
+
 
     return (
         <div>It's me</div>
