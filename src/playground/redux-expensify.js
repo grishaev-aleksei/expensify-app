@@ -44,6 +44,11 @@ export const ReduxExpensify = () => {
         id
     });
 
+    const editExpense = ({id, description, note, amount, createdAt} = {}) => ({
+        type: 'EDIT_EXPENSE',
+        expense: {id, description, note, amount, createdAt}
+    });
+
 
     const expensesReducerDefaultState = [];
     const expensesReducer = (state = expensesReducerDefaultState, action) => {
@@ -51,7 +56,18 @@ export const ReduxExpensify = () => {
             case 'ADD_EXPENSE':
                 return [...state, action.expense];
             case 'REMOVE_EXPENSE':
-                return state.filter(({id}) => id !== action.id;
+                return state.filter(({id}) => id !== action.id);
+            case'EDIT_EXPENSE':
+                const [expense] = state.filter(({id}) => id === action.expense.id);
+                const newExpense = {
+                    ...expense,
+                    description: action.expense.description || expense.description,
+                    note: action.expense.note || expense.note,
+                    amount: action.expense.amount || expense.amount,
+                    createdAt: action.expense.createdAt || expense.createdAt
+                };
+                const filteredArray = state.filter(({id}) => id !== action.expense.id);
+                return [...filteredArray, newExpense];
             default:
                 return state
         }
@@ -81,10 +97,14 @@ export const ReduxExpensify = () => {
     });
 
     const expense1 = store.dispatch(addExpense({description: 'rent', amount: 1}));
-    const expense2 = store.dispatch(addExpense({description: 'coffee', amount: 3}));
+    const expense2 = store.dispatch(addExpense({description: 'coffee', amount: 3, note: 'this one'}));
     const expense3 = store.dispatch(addExpense({description: 'tea', amount: 2}));
 
     store.dispatch(removeExpense({id: expense1.expense.id}));
+
+    console.log({...expense2, me: 'David'});
+
+    store.dispatch(editExpense({id: expense2.expense.id, description: 'coca-cola', amount: 7}));
 
 
     return (

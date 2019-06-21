@@ -27,3 +27,10 @@ const book = {
 const {name: publisherName = 'Self published'} = book.publisher;
 
 console.log(publisherName);
+
+const user = {
+    name: 'Jen',
+    age: 24
+};
+
+console.log({...user, location: 'Philadelphia',age:29});
