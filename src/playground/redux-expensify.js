@@ -44,9 +44,10 @@ export const ReduxExpensify = () => {
         id
     });
 
-    const editExpense = ({id, description, note, amount, createdAt} = {}) => ({
+    const editExpense = (id, updates) => ({
         type: 'EDIT_EXPENSE',
-        expense: {id, description, note, amount, createdAt}
+        id,
+        updates
     });
 
 
@@ -58,21 +59,27 @@ export const ReduxExpensify = () => {
             case 'REMOVE_EXPENSE':
                 return state.filter(({id}) => id !== action.id);
             case'EDIT_EXPENSE':
-                const [expense] = state.filter(({id}) => id === action.expense.id);
-                const newExpense = {
-                    ...expense,
-                    description: action.expense.description || expense.description,
-                    note: action.expense.note || expense.note,
-                    amount: action.expense.amount || expense.amount,
-                    createdAt: action.expense.createdAt || expense.createdAt
-                };
-                const filteredArray = state.filter(({id}) => id !== action.expense.id);
-                return [...filteredArray, newExpense];
+                return state.map((expense) => {
+                    if (expense.id === action.id) {
+                        return {
+                            ...expense,
+                            ...action.updates
+                        }
+                    } else {
+                        return expense
+                    }
+                });
             default:
                 return state
         }
 
     };
+
+    const setTextFilter = (text = '') => ({
+        type: 'SET_TEXT_FILTER',
+        text
+    });
+
     const filtersReducerDefaultState = {
         text: '',
         sortBy: 'date',
@@ -81,6 +88,11 @@ export const ReduxExpensify = () => {
     };
     const filtersReducer = (state = filtersReducerDefaultState, action) => {
         switch (action.type) {
+            case 'SET_TEXT_FILTER':
+                return {
+                    ...state,
+                    text: action.text
+                };
             default:
                 return state
         }
@@ -104,7 +116,10 @@ export const ReduxExpensify = () => {
 
     console.log({...expense2, me: 'David'});
 
-    store.dispatch(editExpense({id: expense2.expense.id, description: 'coca-cola', amount: 7}));
+    store.dispatch(editExpense(expense2.expense.id, {description: 'coca-cola', amount: 7}));
+
+    store.dispatch(setTextFilter('rent'));
+    store.dispatch(setTextFilter());
 
 
     return (
