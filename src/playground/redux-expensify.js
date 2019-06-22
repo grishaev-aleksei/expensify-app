@@ -143,6 +143,12 @@ export const ReduxExpensify = () => {
             const endDateMatch = typeof endDate !== "number" || expense.createdAt <= endDate;
             const textMatch = typeof text !== "string" || expense.description.toLowerCase().includes(text.toLowerCase());
             return startDateMatch && endDateMatch && textMatch
+        }).sort((a, b) => {
+            if (sortBy === 'date') {
+                return a.createdAt < b.createdAt ? 1 : -1;
+            } else if (sortBy === 'amount') {
+                return a.amount > b.amount ? -1 : 1;
+            }
         })
     };
 
@@ -168,10 +174,10 @@ export const ReduxExpensify = () => {
     //
     // store.dispatch(editExpense(expense2.expense.id, {description: 'coca-cola', amount: 7}));
     //
-    store.dispatch(setTextFilter('rent'));
+    // store.dispatch(setTextFilter('rent'));
     // store.dispatch(setTextFilter());
     //
-    // store.dispatch(sortByAmount());
+    store.dispatch(sortByAmount());
     // store.dispatch(sortByDate());
 
     // store.dispatch(setStartDate(123));
