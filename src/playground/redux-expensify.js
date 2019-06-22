@@ -90,12 +90,12 @@ export const ReduxExpensify = () => {
 
     const setStartDate = (startDate) => ({
         type: 'SET_START_DATE',
-        date: startDate
+        startDate
     });
 
     const setEndDate = (endDate) => ({
         type: 'SET_END_DATE',
-        date: endDate
+        endDate
     });
 
     const filtersReducerDefaultState = {
@@ -129,11 +129,21 @@ export const ReduxExpensify = () => {
             case 'SET_END_DATE':
                 return {
                     ...state,
-                    endDateDate: action.endDate
+                    endDate: action.endDate
                 };
             default:
                 return state
         }
+    };
+    //get visible expenses
+    const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate}) => {
+
+        return expenses.filter((expense) => {
+            const startDateMatch = typeof startDate !== "number" || expense.createdAt >= startDate;
+            const endDateMatch = typeof endDate !== "number" || expense.createdAt <= endDate;
+            const textMatch = typeof text !== "string" || expense.description.toLowerCase().includes(text.toLowerCase());
+            return startDateMatch && endDateMatch && textMatch
+        })
     };
 
 
@@ -143,12 +153,14 @@ export const ReduxExpensify = () => {
     }));
 
     store.subscribe(() => {
-        console.log(store.getState());
+        const state = store.getState();
+        const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+        console.log(visibleExpenses);
     });
 
-    // const expense1 = store.dispatch(addExpense({description: 'rent', amount: 1}));
-    // const expense2 = store.dispatch(addExpense({description: 'coffee', amount: 3, note: 'this one'}));
-    // const expense3 = store.dispatch(addExpense({description: 'tea', amount: 2}));
+    const expense1 = store.dispatch(addExpense({description: 'rent', amount: 1, createdAt: 1000}));
+    const expense2 = store.dispatch(addExpense({description: 'coffee', amount: 3, note: 'this one', createdAt: -1000}));
+    const expense3 = store.dispatch(addExpense({description: 'tea', amount: 2, createdAt: 12512512321}));
     //
     // store.dispatch(removeExpense({id: expense1.expense.id}));
     //
@@ -156,15 +168,15 @@ export const ReduxExpensify = () => {
     //
     // store.dispatch(editExpense(expense2.expense.id, {description: 'coca-cola', amount: 7}));
     //
-    // store.dispatch(setTextFilter('rent'));
+    store.dispatch(setTextFilter('rent'));
     // store.dispatch(setTextFilter());
     //
     // store.dispatch(sortByAmount());
     // store.dispatch(sortByDate());
 
-    store.dispatch(setStartDate(123));
-    store.dispatch(setStartDate());
-    store.dispatch(setEndDate(12123));
+    // store.dispatch(setStartDate(123));
+    // store.dispatch(setStartDate());
+    // store.dispatch(setEndDate(12123));
 
 
     return (
