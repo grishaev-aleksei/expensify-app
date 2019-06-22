@@ -80,6 +80,24 @@ export const ReduxExpensify = () => {
         text
     });
 
+    const sortByDate = () => ({
+        type: 'SORT_BY_DATE',
+    });
+
+    const sortByAmount = () => ({
+        type: 'SORT_BY_AMOUNT',
+    });
+
+    const setStartDate = (startDate) => ({
+        type: 'SET_START_DATE',
+        date: startDate
+    });
+
+    const setEndDate = (endDate) => ({
+        type: 'SET_END_DATE',
+        date: endDate
+    });
+
     const filtersReducerDefaultState = {
         text: '',
         sortBy: 'date',
@@ -92,6 +110,26 @@ export const ReduxExpensify = () => {
                 return {
                     ...state,
                     text: action.text
+                };
+            case 'SORT_BY_DATE':
+                return {
+                    ...state,
+                    sortBy: 'date'
+                };
+            case 'SORT_BY_AMOUNT':
+                return {
+                    ...state,
+                    sortBy: 'amount'
+                };
+            case 'SET_START_DATE':
+                return {
+                    ...state,
+                    startDate: action.startDate
+                };
+            case 'SET_END_DATE':
+                return {
+                    ...state,
+                    endDateDate: action.endDate
                 };
             default:
                 return state
@@ -108,18 +146,25 @@ export const ReduxExpensify = () => {
         console.log(store.getState());
     });
 
-    const expense1 = store.dispatch(addExpense({description: 'rent', amount: 1}));
-    const expense2 = store.dispatch(addExpense({description: 'coffee', amount: 3, note: 'this one'}));
-    const expense3 = store.dispatch(addExpense({description: 'tea', amount: 2}));
+    // const expense1 = store.dispatch(addExpense({description: 'rent', amount: 1}));
+    // const expense2 = store.dispatch(addExpense({description: 'coffee', amount: 3, note: 'this one'}));
+    // const expense3 = store.dispatch(addExpense({description: 'tea', amount: 2}));
+    //
+    // store.dispatch(removeExpense({id: expense1.expense.id}));
+    //
+    // console.log({...expense2, me: 'David'});
+    //
+    // store.dispatch(editExpense(expense2.expense.id, {description: 'coca-cola', amount: 7}));
+    //
+    // store.dispatch(setTextFilter('rent'));
+    // store.dispatch(setTextFilter());
+    //
+    // store.dispatch(sortByAmount());
+    // store.dispatch(sortByDate());
 
-    store.dispatch(removeExpense({id: expense1.expense.id}));
-
-    console.log({...expense2, me: 'David'});
-
-    store.dispatch(editExpense(expense2.expense.id, {description: 'coca-cola', amount: 7}));
-
-    store.dispatch(setTextFilter('rent'));
-    store.dispatch(setTextFilter());
+    store.dispatch(setStartDate(123));
+    store.dispatch(setStartDate());
+    store.dispatch(setEndDate(12123));
 
 
     return (
