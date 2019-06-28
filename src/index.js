@@ -9,6 +9,8 @@ import {addExpense} from "./actions/expenses";
 import {setTextFilter} from "./actions/filters";
 import {getVisibleExpenses} from "./selectors/expenses";
 
+import {AuthInfo,Info} from "./playground/hoc";
+
 const store = configureStore();
 
 store.dispatch(addExpense({description: 'water bill'}));
@@ -23,7 +25,7 @@ console.log(visibleExpenses);
 console.log(store.getState());
 
 
-ReactDOM.render(AppRouter, document.getElementById('root'));
+ReactDOM.render(<AuthInfo isAuthenticated={true} info={'this is the detail'}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
