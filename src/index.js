@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/styles.css';
 import * as serviceWorker from './serviceWorker';
+import {Provider} from 'react-redux';
 
 import {AppRouter} from "./routers/AppRouter";
 import configureStore from './store/configureStore'
@@ -9,7 +10,6 @@ import {addExpense} from "./actions/expenses";
 import {setTextFilter} from "./actions/filters";
 import {getVisibleExpenses} from "./selectors/expenses";
 
-import {AuthInfo,Info} from "./playground/hoc";
 
 const store = configureStore();
 
@@ -24,8 +24,19 @@ console.log(visibleExpenses);
 
 console.log(store.getState());
 
+setTimeout(() => {
+    store.dispatch(setTextFilter('Amazonia'));
 
-ReactDOM.render(<AuthInfo isAuthenticated={true} info={'this is the detail'}/>, document.getElementById('root'));
+}, 5000);
+
+
+const Jsx = () => (
+    <Provider store={store}>
+        <AppRouter/>
+    </Provider>
+);
+
+ReactDOM.render(<Jsx/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

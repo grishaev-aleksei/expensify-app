@@ -7,14 +7,15 @@ import {EditExpensePage} from "../components/edit";
 import {NotFoundPage} from "../components/not-found";
 import {Header} from "../components/header";
 import {Home} from "../components/home";
+import {ExpenseDashboardPage} from "../components/ExpenseDashboardPage";
 
 
-export const AppRouter = (
+export const AppRouter = () => (
     <BrowserRouter>
         <div>
             <Header/>
             <Switch>
-                <Route path={'/'} component={Home} exact={true}/>
+                <Route path={'/'} component={ExpenseDashboardPage} exact={true}/>
                 <Route path={'/create'} component={AddExpensePage}/>
                 <Route path={'/edit/:id'} component={EditExpensePage}/>
                 <Route path={'/help'} component={HelpPage}/>
