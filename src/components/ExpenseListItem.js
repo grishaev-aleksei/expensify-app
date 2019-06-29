@@ -2,24 +2,19 @@ import {connect} from "react-redux";
 import React from 'react'
 
 
-const ExpenseListItem = (props) => (
+export const ExpenseListItem = ({description, amount, createdAt}) => (
     <div>
-        {
-            props.expenses.map((expense) => {
-                return (
-                    <p>{JSON.stringify(expense)}</p>
-                )
-            })
-        }
+        <h3>{description}</h3>
+        <p>{amount} - {createdAt}</p>
     </div>
 );
 
-
-const mapStateToProps = (state) => {
-    return {
-        expenses: state.expenses
-    }
-};
-
-
-export default connect(mapStateToProps)(ExpenseListItem);
+//
+// const mapStateToProps = (state) => {
+//     return {
+//         expenses: state.expenses
+//     }
+// };
+//
+//
+// export default connect(mapStateToProps)(ExpenseListItem);
