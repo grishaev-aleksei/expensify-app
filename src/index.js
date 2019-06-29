@@ -24,10 +24,6 @@ console.log(visibleExpenses);
 
 console.log(store.getState());
 
-setTimeout(() => {
-    store.dispatch(setTextFilter('water'));
-
-}, 5000);
 
 
 const Jsx = () => (
