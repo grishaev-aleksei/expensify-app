@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 
 import {HelpPage} from "../components/help";
-import {AddExpensePage} from "../components/AddExpensePage";
+import AddExpensePage from "../components/AddExpensePage";
 import {EditExpensePage} from "../components/EditExpensePage";
 import {NotFoundPage} from "../components/not-found";
 import {Header} from "../components/header";
