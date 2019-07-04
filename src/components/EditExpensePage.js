@@ -2,8 +2,10 @@ import React from 'react'
 import {connect} from "react-redux";
 import {ExpenseForm} from './ExpenseForm'
 import {editExpense, removeExpense} from "../actions/expenses";
+import { withRouter } from "react-router-dom";
 
 const EditExpensePage = (props) => {
+
     return (
         <div>
             <ExpenseForm
